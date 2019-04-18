@@ -1,0 +1,47 @@
+
+<agm-map [latitude]='latitude'
+[longitude]='longitude'
+[zoom]='2'
+(mapClick)='addMarker($event.coords.lat, $event.coords.lng)'>
+<agm-marker
+  *ngFor='let marker of markers'
+  [latitude]='marker.lat'
+  [longitude]='marker.lng'
+  [opacity]='marker.alpha'
+  [iconUrl]="marker.icon"
+  [markerDraggable]='true'
+  (markerClick)='selectMarker($event,content);'
+  >
+</agm-marker>
+</agm-map>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+    <div class="form-group">
+        <label for="jobDate">Event Desc</label>
+        <div class="input-group">
+          <input id="jobdesc" class="form-control" name="jbdesc" [(ngModel)]="jobdesc" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="jobDate">Event Date</label>
+        <div class="input-group">
+          <input id="jobDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="jobdate" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="submitbutton();modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
